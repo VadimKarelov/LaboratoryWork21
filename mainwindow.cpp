@@ -33,7 +33,7 @@ void MainWindow::on_pushButton_Compute_clicked()
         myGraph->Draw(scene);
 
         // show message
-        QMessageBox::warning(this, "Вычисления", "Путь = " +
+        QMessageBox::information(this, "Вычисления", "Путь = " +
                              QString::number(myGraph->MinLength(GetInt(ui->lineEdit_dep->text().toStdString()),
                                                                       GetInt(ui->lineEdit_arr->text().toStdString()))));
     }
@@ -42,14 +42,14 @@ void MainWindow::on_pushButton_Compute_clicked()
 // methods to checking fields
 bool MainWindow::CheckFields()
 {
-    if (ui->lineEdit_arr->text() != "" && GetInt(ui->lineEdit_arr->text().toStdString()) > 0
-            && GetInt(ui->lineEdit_arr->text().toStdString()) < myGraph->Size())
+    if (ui->lineEdit_arr->text() == "" && GetInt(ui->lineEdit_arr->text().toStdString()) <= 0
+            && GetInt(ui->lineEdit_arr->text().toStdString()) >= myGraph->Size())
     {
         QMessageBox::warning(this, "Ошибка","Ошибка пункта прибытия");
         return false;
     }
-    if (ui->lineEdit_dep->text() != "" && GetInt(ui->lineEdit_dep->text().toStdString()) > 0
-            && GetInt(ui->lineEdit_dep->text().toStdString()) < myGraph->Size())
+    if (ui->lineEdit_dep->text() == "" && GetInt(ui->lineEdit_dep->text().toStdString()) <= 0
+            && GetInt(ui->lineEdit_dep->text().toStdString()) >= myGraph->Size())
     {
         QMessageBox::warning(this, "Ошибка","Ошибка пункта отправления");
         return false;

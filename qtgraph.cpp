@@ -11,7 +11,8 @@ void QtGraph::DrawWays(QGraphicsScene *scene)
     double step = 2 * 3.14 / _mat.size();
     int centerX = scene->width() / 2;
     int centerY = scene->height() / 2;
-    int l = 70;
+    int r = 15;
+    int l = 170;
 
     for (int i = 0; i < _mat.size(); i++)
     {
@@ -19,9 +20,17 @@ void QtGraph::DrawWays(QGraphicsScene *scene)
         {
             if (RoadLength(i + 1, j + 1) > 0)
             {
-                QGraphicsItem *ell = scene->addLine(centerX + sin(step * i) * l, centerY +cos(step * i) * l,
-                                                    centerX + sin(step * j) * l, centerY +cos(step * j) * l);
+                int x1 = centerX + sin(step * i) * l;
+                int x2 = centerX + sin(step * j) * l;
+                int y1 = centerY + cos(step * i) * l;
+                int y2 = centerY + cos(step * j) * l;
+                QGraphicsItem *ell = scene->addLine(x1, y1, x2, y2);
                 scene->addItem(ell);
+
+                // draw text
+                QFont font("Times");
+                QGraphicsTextItem *txt = scene->addText(QString::number(RoadLength(i + 1, j + 1)), font);
+                txt->setPos(x2 + (x1 - x2) / 8, y2 + (y1 - y2) / 8);
             }
         }
     }
@@ -33,7 +42,7 @@ void QtGraph::DrawNodes(QGraphicsScene *scene)
     int centerX = scene->width() / 2;
     int centerY = scene->height() / 2;
     int r = 15;
-    int l = 70;
+    int l = 170;
 
     for (int i = 0; i < _mat.size(); i++)
     {
